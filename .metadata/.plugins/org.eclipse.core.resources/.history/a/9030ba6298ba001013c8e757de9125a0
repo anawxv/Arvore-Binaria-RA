@@ -1,0 +1,67 @@
+package bST;
+
+public class ArvoreBinariaDeBusca {
+    No raiz;
+
+ 
+    public void inserir(int valor) {
+        raiz = inserirRec(raiz, valor);
+    }
+
+    private No inserirRec(No atual, int valor) {
+        if (atual == null) {
+            return new No(valor);
+        }
+
+        if (valor < atual.valor) {
+            atual.esquerda = inserirRec(atual.esquerda, valor);
+        } else if (valor > atual.valor) {
+            atual.direita = inserirRec(atual.direita, valor);
+        }
+
+        return atual;
+    }
+
+    public void emOrdem() {
+        emOrdemRec(raiz);
+        System.out.println();
+    }
+
+    private void emOrdemRec(No no) {
+        if (no != null) {
+            emOrdemRec(no.esquerda);
+            System.out.print(no.valor + " ");
+            emOrdemRec(no.direita);
+        }
+    }
+
+    public void mostrarArvore() {
+        mostrarArvoreRec(raiz, 0);
+    }
+
+    private void mostrarArvoreRec(No no, int nivel) {
+        if (no != null) {
+            mostrarArvoreRec(no.direita, nivel + 1);
+            for (int i = 0; i < nivel; i++) {
+                System.out.print("   ");
+            }
+            System.out.println(no.valor);
+            mostrarArvoreRec(no.esquerda, nivel + 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] ra = {2, 4, 0, 4, 1, 1, 5};
+        ArvoreBinariaDeBusca arvore = new ArvoreBinariaDeBusca();
+
+        for (int n : ra) {
+            arvore.inserir(n);
+        }
+
+        System.out.println("Percurso em ordem (ordenado):");
+        arvore.emOrdem();
+
+        System.out.println("\nEstrutura da árvore (girada 90°):");
+        arvore.mostrarArvore();
+    }
+}

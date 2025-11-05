@@ -1,0 +1,49 @@
+package bST;
+
+public class ArvoreBinariaDeBusca {
+    No raiz;
+    public void inserir(int valor) {
+        raiz = inserirRec(raiz, valor);
+    }
+
+    private No inserirRec(No atual, int valor) {
+        if (atual == null) {
+            return new No(valor);
+        }
+
+        if (valor < atual.valor) {
+            atual.esquerda = inserirRec(atual.esquerda, valor);
+        } else if (valor > atual.valor) {
+            atual.direita = inserirRec(atual.direita, valor);
+        }
+
+        return atual;
+    }
+
+
+    public void emOrdem() {
+        emOrdemRec(raiz);
+        System.out.println();
+    }
+
+    private void emOrdemRec(No no) {
+        if (no != null) {
+            emOrdemRec(no.esquerda);
+            System.out.print(no.valor + " ");
+            emOrdemRec(no.direita);
+        }
+    }
+
+
+    public static void main(String[] args) {
+        int[] ra = {2, 4, 0, 4, 1, 1, 5};
+        ArvoreBinariaDeBusca arvore = new ArvoreBinariaDeBusca();
+
+        for (int n : ra) {
+            arvore.inserir(n);
+        }
+
+        System.out.println("Percurso em ordem:");
+        arvore.emOrdem();
+    }
+}

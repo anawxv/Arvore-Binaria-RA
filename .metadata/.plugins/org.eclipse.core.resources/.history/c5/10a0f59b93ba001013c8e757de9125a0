@@ -1,0 +1,55 @@
+package arvore;
+
+class No {
+    int valor;
+    No esquerda;
+    No direita;
+
+    No(int valor) {
+        this.valor = valor;
+    }
+}
+
+class ArvoreParImpar {
+    No raiz;
+
+    void inserir(int valor) {
+        if (raiz == null) {
+            raiz = new No(valor);
+        } else {
+            inserirRec(raiz, valor);
+        }
+    }
+
+    void inserirRec(No no, int valor) {
+        if (valor % 2 == 0) {
+            if (no.esquerda == null) no.esquerda = new No(valor);
+            else inserirRec(no.esquerda, valor);
+        } else {
+            if (no.direita == null) no.direita = new No(valor);
+            else inserirRec(no.direita, valor);
+        }
+    }
+
+    void mostrar(No no, int nivel) {
+        if (no == null) return;
+        for (int i = 0; i < nivel; i++) System.out.print("  ");
+        System.out.println(no.valor);
+        mostrar(no.esquerda, nivel + 1);
+        mostrar(no.direita, nivel + 1);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        int[] numeros = {2, 4, 0, 4, 1, 1, 5};
+
+        ArvoreParImpar arvore = new ArvoreParImpar();
+        for (int n : numeros) {
+            arvore.inserir(n);
+        }
+
+        System.out.println("Árvore construída (pares à esquerda, ímpares à direita):");
+        arvore.mostrar(arvore.raiz, 0);
+    }
+}
